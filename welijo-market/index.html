@@ -71,6 +71,7 @@
                 <a href="#produk" class="block py-2 text-gray-700 hover:text-primary-green transition">Produk</a>
                 <a href="#tentang" class="block py-2 text-gray-700 hover:text-primary-green transition">Tentang</a>
                 <a href="#kontak" class="block py-2 text-gray-700 hover:text-primary-green transition">Kontak</a>
+                <a href="#riwayat" class="block py-2 text-gray-700 hover:text-primary-green transition">Riwayat</a>
             </div>
         </div>
     </nav>
@@ -208,7 +209,7 @@
                         </svg>
                     </div>
                     <h3 class="font-semibold text-lg mb-2">Email</h3>
-                    <p class="text-gray-600">info@welijomarket.com</p>
+                    <p class="text-gray-600">@welijomarket.com</p>
                 </div>
             </div>
         </div>
@@ -244,6 +245,131 @@
             </div>
         </div>
     </footer>
+
+    <!-- Modal Checkout -->
+    <div id="checkout-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50 p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-screen overflow-y-auto">
+            <!-- Header Modal -->
+            <div class="bg-gradient-to-r from-primary-green to-dark-green text-white p-6 rounded-t-2xl">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-bold">Form Checkout</h3>
+                    <button id="close-modal" class="text-white hover:text-yellow-300 transition">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Form Body -->
+            <form id="checkout-form" class="p-6 space-y-4">
+                <!-- Info Produk (readonly) -->
+                <div class="bg-green-50 rounded-xl p-4 border border-green-200">
+                    <p class="text-sm text-gray-500 mb-1">Produk yang dipesan</p>
+                    <p id="checkout-product-name" class="font-semibold text-dark-green text-lg"></p>
+                    <p id="checkout-product-price" class="text-primary-green font-medium"></p>
+                </div>
+
+                <!-- Nama Pembeli -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama Pembeli <span class="text-red-500">*</span></label>
+                    <input type="text" id="buyer-name" required placeholder="Masukkan nama lengkap"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-green focus:border-transparent transition">
+                </div>
+
+                <!-- Nomor WhatsApp -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nomor WhatsApp <span class="text-red-500">*</span></label>
+                    <input type="tel" id="buyer-wa" required placeholder="Contoh: 08123456789"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-green focus:border-transparent transition">
+                </div>
+
+                <!-- Alamat -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Alamat Pengiriman <span class="text-red-500">*</span></label>
+                    <textarea id="buyer-address" required rows="3" placeholder="Masukkan alamat lengkap"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-green focus:border-transparent transition resize-none"></textarea>
+                </div>
+
+                <!-- Jumlah -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah <span class="text-red-500">*</span></label>
+                    <div class="flex items-center space-x-3">
+                        <button type="button" id="qty-minus"
+                            class="w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 font-bold text-xl flex items-center justify-center transition">−</button>
+                        <input type="number" id="buyer-qty" value="1" min="1" max="100" required
+                            class="w-20 text-center border border-gray-300 rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-primary-green transition">
+                        <button type="button" id="qty-plus"
+                            class="w-10 h-10 rounded-full bg-primary-green hover:bg-dark-green text-white font-bold text-xl flex items-center justify-center transition">+</button>
+                        <span id="checkout-unit" class="text-gray-500 text-sm"></span>
+                    </div>
+                </div>
+
+                <!-- Total Harga -->
+                <div class="bg-yellow-50 rounded-xl p-4 border border-yellow-200">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-gray-700">Total Harga:</span>
+                        <span id="checkout-total" class="text-xl font-bold text-dark-green">Rp 0</span>
+                    </div>
+                </div>
+
+                <!-- Error Message -->
+                <div id="form-error" class="hidden bg-red-50 border border-red-200 text-red-700 rounded-lg p-3 text-sm"></div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="submit-btn"
+                    class="w-full bg-primary-green hover:bg-dark-green text-white font-semibold py-3 rounded-xl transition transform hover:scale-105 flex items-center justify-center space-x-2">
+                    <span id="submit-text">Pesan Sekarang</span>
+                    <div id="submit-spinner" class="hidden animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notifikasi Sukses -->
+    <div id="success-toast" class="fixed top-6 right-6 z-50 hidden bg-white border-l-4 border-primary-green shadow-lg rounded-lg p-4 max-w-sm">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-primary-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+            </div>
+            <div>
+                <p class="font-semibold text-gray-800">Pesanan Berhasil!</p>
+                <p class="text-sm text-gray-600">Data pesanan telah tersimpan.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Riwayat Transaksi -->
+    <section id="riwayat" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-dark-green mb-4">Riwayat Transaksi</h2>
+            <p class="text-center text-gray-600 mb-8">Pesanan yang telah dilakukan di sesi ini</p>
+
+            <div id="riwayat-empty" class="text-center py-12 text-gray-400">
+                <svg class="w-16 h-16 mx-auto mb-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                </svg>
+                <p>Belum ada transaksi di sesi ini.</p>
+            </div>
+
+            <div id="riwayat-container" class="hidden overflow-x-auto">
+                <table class="w-full text-sm text-left border-collapse">
+                    <thead>
+                        <tr class="bg-primary-green text-white">
+                            <th class="px-4 py-3 rounded-tl-lg">Tanggal</th>
+                            <th class="px-4 py-3">Nama</th>
+                            <th class="px-4 py-3">Produk</th>
+                            <th class="px-4 py-3">Jumlah</th>
+                            <th class="px-4 py-3 rounded-tr-lg">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="riwayat-tbody" class="divide-y divide-gray-100"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
 
     <!-- JavaScript -->
     <script src="js/app.js"></script>
