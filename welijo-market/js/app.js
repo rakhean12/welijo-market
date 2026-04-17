@@ -7,8 +7,8 @@
 // ========================================
 
 // URL Google Apps Script (satu URL untuk semua — GET produk & checkout)
-const API_URL = 'https://script.google.com/macros/s/AKfycbwFy13kM1begQH4OH7iZXPTIiNievU_Ft9W0IfULVi0S2N41lo-AulX2-KR7-PTyTqCbA/exec';
-const CHECKOUT_URL = 'https://script.google.com/macros/s/AKfycbyE1pQWiC1I-Qwbe2_FPWTNyIgCQXkVcIlNO4pFgmPNGnpcPxuQILNSv5TT8AxVjSPJ/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbxGJPQ4FlVqoE8ajuRmxOqXpYlBnYXLI07bxOzLeYwV273vf_t_aDIfAESyrWsbBeEy/exec';
+const CHECKOUT_URL = API_URL;
 
 // Nomor WhatsApp (format: 628xxxxxxxxxx)
 const WHATSAPP_NUMBER = '6281234567890';
